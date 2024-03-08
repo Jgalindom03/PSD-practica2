@@ -13,8 +13,8 @@ public class Cliente {
         Interfaz interfaz = (Interfaz) registry.lookup("Calculadora"); //Buscar en el registro...
         Scanner sc = new Scanner(System.in);
         int eleccion;
-        float numero1, numero2, resultado = 0;
-        String menu = "\n\n------------------\n\n[-1] => Salir\n[0] => Sumar\n[1] => Restar\n[2] => Multiplicar\n[3] => Dividir\nElige: ";
+        float numero1, numero2=0, resultado = 0;
+        String menu = "\n\n------------------\n\n[-1] => Salir\n[0] => Sumar\n[1] => Restar\n[2] => Multiplicar\n[3] => Dividir\n[4] => Raiz cuadrada\nElige: ";
         do {
             System.out.println(menu);
 
@@ -23,40 +23,46 @@ public class Cliente {
             } catch (NumberFormatException e) {
                 eleccion = -1;
             }
-
             if (eleccion != -1) {
-
                 System.out.println("Ingresa el número 1: ");
                 try {
                     numero1 = Float.parseFloat(sc.nextLine());
                 } catch (NumberFormatException e) {
                     numero1 = 0;
                 }
-
-                System.out.println("Ingresa el número 2: ");
-                try {
-                    numero2 = Float.parseFloat(sc.nextLine());
-                } catch (NumberFormatException e) {
-                    numero2 = 0;
+                if (eleccion != 4) {
+                    System.out.println("Ingresa el número 2: ");
+                    try {
+                        numero2 = Float.parseFloat(sc.nextLine());
+                    } catch (NumberFormatException e) {
+                        numero2 = 0;
+                    }
                 }
-                switch (eleccion) {
-                    case 0:
-                        resultado = interfaz.sumar(numero1, numero2);
-                        break;
-                    case 1:
-                        resultado = interfaz.restar(numero1, numero2);
-                        break;
-                    case 2:
-                        resultado = interfaz.multiplicar(numero1, numero2);
-                        break;
-                    case 3:
-                        resultado = interfaz.dividir(numero1, numero2);
-                        break;
+                    switch (eleccion) {
+                        case 0:
+                            resultado = interfaz.sumar(numero1, numero2);
+                            break;
+                        case 1:
+                            resultado = interfaz.restar(numero1, numero2);
+                            break;
+                        case 2:
+                            resultado = interfaz.multiplicar(numero1, numero2);
+                            break;
+                        case 3:
+                            resultado = interfaz.dividir(numero1, numero2);
+                            break;
+                        case 4:
+                            if(numero1>0) {
+                                resultado = interfaz.raiz(numero1);
+                            }
+                                break;
+                    }
+                    System.out.println("Resultado => " + String.valueOf(resultado));
+                    System.out.println("Presiona ENTER para continuar");
+                    sc.nextLine();
                 }
-                System.out.println("Resultado => " + String.valueOf(resultado));
-                System.out.println("Presiona ENTER para continuar");
-                sc.nextLine();
-            }
-        } while (eleccion != -1);
+        }
+            while (eleccion != -1) ;
+        }
     }
-}
+
